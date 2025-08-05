@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conveter Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Converter Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -12,152 +13,296 @@
        <p>A collection of useful conversion tools</p>
     </header>
 
-    <main>
-        <section id="sectBtn">
-            <button>
-                File Transfer
-            </button>
-            <button>
-                Temparature
-            </button>
-            <button>
-                Scientific
-            </button>
-            <button>
-                Metric
-            </button>
-        </section>
-
-        <section id="fileIpt">
-            
-            <h2>File Tranfer Time Calculator</h2>
-        
-            <label for="file_size">File Size:</label><br>
-            <input type="number" name="file_size" id="file_size">
-            <select name="size_per_byte" id="size_per_byte">
-                <option value="">Kilobytes(Kb)</option>
-                <option value="">Megabits (Mb)</option>
-                <option value="">Gigabit(Gb)</option>
-            </select> <br>
-            <label for="internet_speed">Internet Speed:</label><br>
-            <input type="number" name="internet_speed" id="internet_speed">
-            <select name="size_byte_per_sec" id="size_byte_per_sec">
-                <option value="">Kilobytes/sec(Kbps)</option>
-                <option value="">Megabits/sec(Mbps)</option>
-                <option value="">Gigabit/sec(Gbps)</option>
-            </select> <br>
-            <button onclick="calculateSpeed()">Calculate</button>
-
-            <div id="answer">
-                <h3>Estimated time: </h3>
-                <p></p>
+    <main class="container">
+        <div class="converter-container">
+            <div class="converter-tabs">
+                <button class="tab-btn active" data-tab="file-transfer">
+                    <i class="fas fa-file-export"></i> File Transfer
+                </button>
+                <button class="tab-btn" data-tab="temperature">
+                    <i class="fas fa-temperature-high"></i> Temperature
+                </button>
+                <button class="tab-btn" data-tab="scientific">
+                    <i class="fas fa-flask"></i> Scientific
+                </button>
+                <button class="tab-btn" data-tab="metric">
+                    <i class="fas fa-ruler-combined"></i> Metric
+                </button>
             </div>
 
-        </section>
+            <section id="file-transfer" class="converter-section active">
+                <h2>File Transfer Time Calculator</h2>
+                
+                <div class="input-group">
+                    <label for="file_size">File Size:</label>
+                    <div class="input-row">
+                        <input type="number" name="file_size" id="file_size" placeholder="Enter file size">
+                        <select name="size_per_byte" id="size_per_byte">
+                            <option value="kilobytes">Kilobytes (KB)</option>
+                            <option value="megabits">Megabits (Mb)</option>
+                            <option value="gigabits">Gigabits (Gb)</option>
+                            <option value="megabytes">Megabytes (MB)</option>
+                            <option value="gigabytes">Gigabytes (GB)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="internet_speed">Internet Speed:</label>
+                    <div class="input-row">
+                        <input type="number" name="internet_speed" id="internet_speed" placeholder="Enter internet speed">
+                        <select name="size_byte_per_sec" id="size_byte_per_sec">
+                            <option value="kilobytes_sec">Kilobytes/sec (KB/s)</option>
+                            <option value="megabits_sec">Megabits/sec (Mbps)</option>
+                            <option value="gigabits_sec">Gigabits/sec (Gbps)</option>
+                            <option value="megabytes_sec">Megabytes/sec (MB/s)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="convert-btn" onclick="calculateSpeed()">
+                    <i class="fas fa-calculator"></i> Calculate
+                </button>
 
-        <section id="temp">
-            <h2>Temperature Converter</h2>
-            <label for="">Value to Convert</label>
-            <input type="number">
-            <label for="From">From</label>
-            <select name="" id="">
-                <option value="Celsius">Celsius</option>
-                <option value="Fehrenheit()">Fehrenheit</option>
-            </select>
-            <button>
-                Convert
-            </button>
-            <div id="answer">
-                <h3>converted Value: </h3>
-                <p></p>
-            </div>
+                <div class="result-box" id="file-transfer-result">
+                    <h3>Estimated Time:</h3>
+                    <p id="file-transfer-answer">Please enter values to calculate</p>
+                </div>
+            </section>
 
-        </section>
+            <section id="temperature" class="converter-section">
+                <h2>Temperature Converter</h2>
+                
+                <div class="input-group">
+                    <label for="temp-value">Value to Convert:</label>
+                    <input type="number" id="temp-value" placeholder="Enter temperature value">
+                </div>
+                
+                <div class="input-group">
+                    <label for="temp-from">From:</label>
+                    <select id="temp-from">
+                        <option value="celsius">Celsius (°C)</option>
+                        <option value="fahrenheit">Fahrenheit (°F)</option>
+                        <option value="kelvin">Kelvin (K)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="temp-to">To:</label>
+                    <select id="temp-to">
+                        <option value="fahrenheit">Fahrenheit (°F)</option>
+                        <option value="celsius">Celsius (°C)</option>
+                        <option value="kelvin">Kelvin (K)</option>
+                    </select>
+                </div>
+                
+                <button class="convert-btn" onclick="convertTemperature()">
+                    <i class="fas fa-exchange-alt"></i> Convert
+                </button>
 
-        <section id="scientific">
-            <h2>Scientific Notation converter</h2>
-            <label for="">
-                Sci
-            </label>
+                <div class="result-box" id="temp-result">
+                    <h3>Converted Value:</h3>
+                    <p id="temp-answer">Please enter values to convert</p>
+                </div>
+            </section>
 
-        </section>
-        
+            <section id="scientific" class="converter-section">
+                <h2>Scientific Notation Converter</h2>
+                <p style="text-align: center; margin-top: 2rem; color: #666;">
+                    <i class="fas fa-tools"></i> This converter is under development
+                </p>
+            </section>
+
+            <section id="metric" class="converter-section">
+                <h2>Metric Converter</h2>
+                <p style="text-align: center; margin-top: 2rem; color: #666;">
+                    <i class="fas fa-tools"></i> This converter is under development
+                </p>
+            </section>
+        </div>
     </main>
 
-    <script src="app.js">
-
-    </script>
     <script>
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabSections = document.querySelectorAll('.converter-section');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                tabSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === tabId) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+        
         function calculateSpeed() {
             let file_size = document.getElementById('file_size').value;
             let internet_speed = document.getElementById('internet_speed').value;
-            let fileUnit = document.getElementById('size_per_byte').selectedIndex;
-            let speedUnit = document.getElementById('size_byte_per_sec').selectedIndex;
+            let fileUnit = document.getElementById('size_per_byte').value;
+            let speedUnit = document.getElementById('size_byte_per_sec').value;
             let answer = 0;
 
             file_size = parseFloat(file_size);
             internet_speed = parseFloat(internet_speed);
 
             if (!file_size || !internet_speed) {
-                document.querySelector('#answer p').textContent = 'Please enter both values.';
+                document.getElementById('file-transfer-answer').textContent = 'Please enter both values.';
                 return;
             }
 
-            // Convert file size to bits
+            if (file_size <= 0 || internet_speed <= 0) {
+                document.getElementById('file-transfer-answer').textContent = 'Values must be greater than zero.';
+                return;
+            }
+
             let fileSizeBits;
             switch (fileUnit) {
-                case 0: // Kilobytes
-                    fileSizeBits = file_size * 8 * 1024;
+                case 'kilobytes':
+                    fileSizeBits = file_size * 8 * 1024; 
+                case 'megabits':
+                    fileSizeBits = file_size * 1_000_000; 
                     break;
-                case 1: // Megabits
-                    fileSizeBits = file_size * 1_000_000;
+                case 'gigabits':
+                    fileSizeBits = file_size * 1_000_000_000; 
                     break;
-                case 2: // Gigabit
-                    fileSizeBits = file_size * 1_000_000_000;
+                case 'megabytes':
+                    fileSizeBits = file_size * 8 * 1024 * 1024; 
+                    break;
+                case 'gigabytes':
+                    fileSizeBits = file_size * 8 * 1024 * 1024 * 1024; 
                     break;
                 default:
                     fileSizeBits = file_size;
             }
 
-            // Convert speed to bits per second
             let speedBitsPerSec;
             switch (speedUnit) {
-                case 0: // Kilobytes/sec
-                    speedBitsPerSec = internet_speed * 8 * 1024;
+                case 'kilobytes_sec':
+                    speedBitsPerSec = internet_speed * 8 * 1024; 
                     break;
-                case 1: // Megabits/sec
-                    speedBitsPerSec = internet_speed * 1_000_000;
+                case 'megabits_sec':
+                    speedBitsPerSec = internet_speed * 1_000_000; 
                     break;
-                case 2: // Gigabit/sec
+                case 'gigabits_sec':
                     speedBitsPerSec = internet_speed * 1_000_000_000;
+                    break;
+                case 'megabytes_sec':
+                    speedBitsPerSec = internet_speed * 8 * 1024 * 1024; 
                     break;
                 default:
                     speedBitsPerSec = internet_speed;
             }
 
             if (speedBitsPerSec === 0) {
-                document.querySelector('#answer p').textContent = 'Internet speed cannot be zero.';
+                document.getElementById('file-transfer-answer').textContent = 'Internet speed cannot be zero.';
                 return;
             }
 
             answer = fileSizeBits / speedBitsPerSec;
 
             function formatTime(seconds) {
+                if (seconds < 1) return (seconds * 1000).toFixed(2) + ' milliseconds';
                 if (seconds < 60) return seconds.toFixed(2) + ' seconds';
+                
                 let mins = Math.floor(seconds / 60);
                 let secs = Math.round(seconds % 60);
-                if (mins < 60) return `${mins} min ${secs} sec`;
+                
+                if (mins < 60) {
+                    if (secs === 0) return `${mins} minute${mins !== 1 ? 's' : ''}`;
+                    return `${mins} minute${mins !== 1 ? 's' : ''} ${secs} second${secs !== 1 ? 's' : ''}`;
+                }
+                
                 let hrs = Math.floor(mins / 60);
                 mins = mins % 60;
-                return `${hrs} hr ${mins} min ${secs} sec`;
+                
+                if (hrs < 24) {
+                    let timeStr = `${hrs} hour${hrs !== 1 ? 's' : ''}`;
+                    if (mins > 0) timeStr += ` ${mins} minute${mins !== 1 ? 's' : ''}`;
+                    return timeStr;
+                }
+                
+                let days = Math.floor(hrs / 24);
+                hrs = hrs % 24;
+                
+                let timeStr = `${days} day${days !== 1 ? 's' : ''}`;
+                if (hrs > 0) timeStr += ` ${hrs} hour${hrs !== 1 ? 's' : ''}`;
+                if (mins > 0 && days < 3) timeStr += ` ${mins} minute${mins !== 1 ? 's' : ''}`;
+                
+                return timeStr;
             }
 
-            document.querySelector('#answer p').textContent = formatTime(answer);
+            document.getElementById('file-transfer-answer').textContent = formatTime(answer);
+        }
 
-
-
+        
+        function convertTemperature() {
+            const tempValue = parseFloat(document.getElementById('temp-value').value);
+            const fromUnit = document.getElementById('temp-from').value;
+            const toUnit = document.getElementById('temp-to').value;
+            const resultElement = document.getElementById('temp-answer');
+            
+            if (isNaN(tempValue)) {
+                resultElement.textContent = 'Please enter a valid temperature value.';
+                return;
+            }
+            
+            
+            let celsius;
+            switch (fromUnit) {
+                case 'celsius':
+                    celsius = tempValue;
+                    break;
+                case 'fahrenheit':
+                    celsius = (tempValue - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = tempValue - 273.15;
+                    break;
+            }
+            
+           
+            if (fromUnit === 'kelvin' && tempValue < 0) {
+                resultElement.textContent = 'Temperature cannot be below absolute zero (0K).';
+                return;
+            }
+            
+            if ((fromUnit === 'celsius' && tempValue < -273.15) || 
+                (fromUnit === 'fahrenheit' && tempValue < -459.67)) {
+                resultElement.textContent = 'Temperature cannot be below absolute zero.';
+                return;
+            }
+            
+            
+            let result;
+            switch (toUnit) {
+                case 'celsius':
+                    result = celsius;
+                    break;
+                case 'fahrenheit':
+                    result = (celsius * 9/5) + 32;
+                    break;
+                case 'kelvin':
+                    result = celsius + 273.15;
+                    break;
+            }
+            
+           
+            let unitSymbol;
+            switch (toUnit) {
+                case 'celsius': unitSymbol = '°C'; break;
+                case 'fahrenheit': unitSymbol = '°F'; break;
+                case 'kelvin': unitSymbol = 'K'; break;
+            }
+            
+            resultElement.textContent = `${result.toFixed(2)} ${unitSymbol}`;
         }
     </script>
-    
 </body>
 </html>
