@@ -8,9 +8,8 @@
 </head>
 <body>
     <header>
-        <nav>
-
-        </nav>
+       <h1>Converter Hub</h1>
+       <p>A collection of useful conversion tools</p>
     </header>
 
     <main>
@@ -29,26 +28,57 @@
             </button>
         </section>
 
-        <div id="heading">
-            <h2>File Tranfer Time Calculator</h2>
-        </div>
-
         <section id="fileIpt">
-            <label for="file_size">File Size</label><br>
+            
+            <h2>File Tranfer Time Calculator</h2>
+        
+            <label for="file_size">File Size:</label><br>
             <input type="number" name="file_size" id="file_size">
-            <select name="" id="">
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+            <select name="size_per_byte" id="size_per_byte">
+                <option value="">Kilobytes(Kb)</option>
+                <option value="">Megabits (Mb)</option>
+                <option value="">Gigabit(Gb)</option>
             </select> <br>
-            <label for="internet_speed">Internet Speed</label><br>
+            <label for="internet_speed">Internet Speed:</label><br>
             <input type="number" name="internet_speed" id="internet_speed">
-            <select name="" id="">
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+            <select name="size_byte_per_sec" id="size_byte_per_sec">
+                <option value="">Kilobytes/sec(Kbps)</option>
+                <option value="">Megabits/sec(Mbps)</option>
+                <option value="">Gigabit/sec(Gbps)</option>
             </select> <br>
-            <button>Calculate</button>
+            <button onclick="calculateSpeed()">Calculate</button>
+
+            <div id="answer">
+                <h3>Estimated time: </h3>
+                <p></p>
+            </div>
+
+        </section>
+
+        <section id="temp">
+            <h2>Temperature Converter</h2>
+            <label for="">Value to Convert</label>
+            <input type="number">
+            <label for="From">From</label>
+            <select name="" id="">
+                <option value="Celsius">Celsius</option>
+                <option value="Fehrenheit()">Fehrenheit</option>
+            </select>
+            <button>
+                Convert
+            </button>
+            <div id="answer">
+                <h3>converted Value: </h3>
+                <p></p>
+            </div>
+
+        </section>
+
+        <section id="scientific">
+            <h2>Scientific Notation converter</h2>
+            <label for="">
+                Sci
+            </label>
 
         </section>
         
@@ -56,6 +86,77 @@
 
     <script src="app.js">
 
+    </script>
+    <script>
+        function calculateSpeed() {
+            let file_size = document.getElementById('file_size').value;
+            let internet_speed = document.getElementById('internet_speed').value;
+            let fileUnit = document.getElementById('size_per_byte').selectedIndex;
+            let speedUnit = document.getElementById('size_byte_per_sec').selectedIndex;
+            let answer = 0;
+
+            file_size = parseFloat(file_size);
+            internet_speed = parseFloat(internet_speed);
+
+            if (!file_size || !internet_speed) {
+                document.querySelector('#answer p').textContent = 'Please enter both values.';
+                return;
+            }
+
+            // Convert file size to bits
+            let fileSizeBits;
+            switch (fileUnit) {
+                case 0: // Kilobytes
+                    fileSizeBits = file_size * 8 * 1024;
+                    break;
+                case 1: // Megabits
+                    fileSizeBits = file_size * 1_000_000;
+                    break;
+                case 2: // Gigabit
+                    fileSizeBits = file_size * 1_000_000_000;
+                    break;
+                default:
+                    fileSizeBits = file_size;
+            }
+
+            // Convert speed to bits per second
+            let speedBitsPerSec;
+            switch (speedUnit) {
+                case 0: // Kilobytes/sec
+                    speedBitsPerSec = internet_speed * 8 * 1024;
+                    break;
+                case 1: // Megabits/sec
+                    speedBitsPerSec = internet_speed * 1_000_000;
+                    break;
+                case 2: // Gigabit/sec
+                    speedBitsPerSec = internet_speed * 1_000_000_000;
+                    break;
+                default:
+                    speedBitsPerSec = internet_speed;
+            }
+
+            if (speedBitsPerSec === 0) {
+                document.querySelector('#answer p').textContent = 'Internet speed cannot be zero.';
+                return;
+            }
+
+            answer = fileSizeBits / speedBitsPerSec;
+
+            function formatTime(seconds) {
+                if (seconds < 60) return seconds.toFixed(2) + ' seconds';
+                let mins = Math.floor(seconds / 60);
+                let secs = Math.round(seconds % 60);
+                if (mins < 60) return `${mins} min ${secs} sec`;
+                let hrs = Math.floor(mins / 60);
+                mins = mins % 60;
+                return `${hrs} hr ${mins} min ${secs} sec`;
+            }
+
+            document.querySelector('#answer p').textContent = formatTime(answer);
+
+
+
+        }
     </script>
     
 </body>
